@@ -1,0 +1,68 @@
+
+<ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <ion-list class="cards">
+      
+      <ion-card *ngFor="let fund of fundaciones">
+          <ion-card-header>
+            <img src="{{url + 'obtener-foto/' + fund.logo}}" (click)="perfilFundacion(fund._id)">
+          </ion-card-header>
+        
+          <ion-card-content>
+            <ion-card-title (click)="perfilFundacion(fund._id)">{{fund.nombreFundacion}}</ion-card-title>
+          </ion-card-content>
+        </ion-card>
+        <p *ngIf="status == true">No se encontró más fundaciones</p>
+    </ion-list>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="agregando fundaciones...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+   <!--<div class="cards">
+      <ion-card>
+        <ion-card-header>
+          <img src="../../assets/img/a536c6ad7b1d4473ebc6ddf5b19e7e88.jpg">
+        </ion-card-header>
+      
+        <ion-card-content>
+          <ion-card-title>Card Title</ion-card-title>
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+          <ion-card-header>
+            <img src="../../assets/img/a536c6ad7b1d4473ebc6ddf5b19e7e88.jpg">
+          </ion-card-header>
+        
+          <ion-card-content>
+            <ion-card-title>Card Titlesadsa asdssd</ion-card-title>
+          </ion-card-content>
+        </ion-card>
+        <ion-card>
+            <ion-card-header>
+              <img src="../../assets/img/a536c6ad7b1d4473ebc6ddf5b19e7e88.jpg">
+            </ion-card-header>
+          
+            <ion-card-content>
+              <ion-card-title>Card Title</ion-card-title>
+            </ion-card-content>
+          </ion-card>
+          <ion-card>
+              <ion-card-header>
+                <img src="../../assets/img/a536c6ad7b1d4473ebc6ddf5b19e7e88.jpg">
+              </ion-card-header>
+            
+              <ion-card-content>
+                <ion-card-title>Card Title</ion-card-title>
+              </ion-card-content>
+            </ion-card>
+             
+    </div>-->
+    
+  
+  </ion-content>

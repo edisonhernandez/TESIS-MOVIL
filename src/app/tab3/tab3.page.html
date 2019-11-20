@@ -1,0 +1,29 @@
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list >
+    <ion-item>
+        <h5>Notificaciones</h5>
+    </ion-item>
+    
+    <ion-item *ngFor="let nt of notificaciones">
+      <ion-avatar slot="start">
+        <img src="{{url + 'obtener-foto-mascota/' + nt.mascota.fotos[0].name}}">
+      </ion-avatar>
+      <ion-label>Has solicitado realizar una adopción</ion-label>
+    </ion-item>
+ 
+      <p *ngIf="status == true" style="text-align: center;">No se encontró más notificaciones</p>
+  </ion-list>
+
+<ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+  <ion-infinite-scroll-content
+    loadingSpinner="bubbles"
+    loadingText="agregando notificaciones...">
+  </ion-infinite-scroll-content>
+</ion-infinite-scroll>
+
+</ion-content>

@@ -1,0 +1,347 @@
+
+<ion-content>
+
+<div class="header-adopcion" *ngIf="mascota">
+  <div class="titulo">
+    <h2>Proceso de adopción</h2>
+    <ion-icon name="close-circle" (tap)="myDismiss('no')"></ion-icon>
+  </div>
+  <div class="mascota">
+      <ion-chip>
+          <ion-avatar>
+            <img src="{{url + 'obtener-foto-mascota/' + mascota.fotos[0].name}}">
+          </ion-avatar>
+          <ion-label>{{mascota.nombre}}</ion-label>
+        </ion-chip>
+  </div>
+</div>
+<div class="form-adopcion">
+    <mat-horizontal-stepper [linear]="isLinear" #stepper>
+        <ng-template matStepperIcon="account_circle">
+            <mat-icon>account_circle</mat-icon>
+          </ng-template>
+          <ng-template matStepperIcon="pets">
+              <mat-icon>pets</mat-icon>
+            </ng-template>
+            <ng-template matStepperIcon="people">
+                <mat-icon>people</mat-icon>
+              </ng-template>
+            <ng-template matStepperIcon="contact_phone">
+                <mat-icon>contact_phone</mat-icon>
+              </ng-template>
+              
+          <ng-template matStepperIcon="done">
+            <mat-icon>done_all</mat-icon>
+          </ng-template>
+        <mat-step state="account_circle">
+            
+              <form id="formC" #loginForm="ngForm"  class="formContent">
+
+
+            
+                  <ion-item [class.formError]="!cedula.valid && cedula.touched">
+                      <ion-label  position="floating">Cédula</ion-label>
+                      <ion-input required  pattern="^[0-9]+$" maxlength="10" minlength="10" type="text" id="cedula"  name="cedula" #cedula="ngModel" [(ngModel)]="adopcion.cedula"></ion-input>
+                    </ion-item>
+                    <p class="formErrormsj" *ngIf="!cedula.valid && cedula.touched">Cédula no válida</p>
+              
+                      <ion-list>
+                          <ion-item [class.formError]="!instruccion.valid && instruccion.touched">
+                            <ion-label>Instrucción</ion-label>
+                            <ion-select multiple="true" okText="Aceptar" cancelText="Cerrar" required  id="instruccion"  name="instruccion" #instruccion="ngModel" [(ngModel)]="adopcion.instruccion">
+                              <ion-select-option value="Primaria">Primaria</ion-select-option>
+                              <ion-select-option value="Secundaria">Secundaria</ion-select-option>
+                              <ion-select-option value="Universidad">Universidad</ion-select-option>
+                              <ion-select-option value="Postgrado">Postgrado</ion-select-option>
+                            </ion-select>
+                          </ion-item>
+                        
+                        </ion-list>
+                      
+                        <ion-item [class.formError]="!ocupacion.valid && ocupacion.touched">
+                            <ion-label  position="floating">Ocupación</ion-label>
+                            <ion-input required pattern="^[a-z A-Z áéíóúÁÉÍÓÚ]+$" maxlength="50" minlength="5" type="text" id="ocupacion"  name="ocupacion" #ocupacion="ngModel" [(ngModel)]="adopcion.ocupacion"></ion-input>
+                          </ion-item>
+                        <p class="formErrormsj" *ngIf="!ocupacion.valid && ocupacion.touched">Selecciona tu ocupación</p>
+                        <ion-item [class.formError]="!telefono.valid && telefono.touched"> 
+                            <ion-label position="floating">Teléfono (domicilio)</ion-label>
+                            <ion-input pattern="^[0-9]+$" maxlength="9" minlength="9" required  type="text" id="telefono" name="telefono" #telefono="ngModel" [(ngModel)]="adopcion.telefono"></ion-input>
+                          </ion-item>
+                          <p class="formErrormsj" *ngIf="!telefono.valid && telefono.touched">Teléfono no válido</p>
+                    
+                          <ion-item [class.formError]="!celular.valid && celular.touched">
+                            <ion-label  position="floating">Celular</ion-label>
+                            <ion-input required pattern="^[0-9]+$" maxlength="10" minlength="10" type="text" id="celular"  name="celular" #celular="ngModel" [(ngModel)]="adopcion.celular"></ion-input>
+                          </ion-item>
+                          <p class="formErrormsj" *ngIf="!celular.valid && celular.touched">Celular no válido</p>
+                          <ion-item [class.formError]="!direccion.valid && direccion.touched"> 
+                              <ion-label position="floating">Dirección domiciliaria</ion-label>
+                              <ion-input pattern="^[a-z A-Z áéíóúÁÉÍÓÚ]+$" maxlength="300" minlength="30" required  type="text" id="direccion" name="direccion" #direccion="ngModel" [(ngModel)]="adopcion.direccion"></ion-input>
+                            </ion-item>
+                            <p class="formErrormsj" *ngIf="!direccion.valid && direccion.touched">Dirección no válida</p>
+                            <ion-list>
+                                <ion-item [class.formError]="!inmueble.valid && inmueble.touched">
+                                  <ion-label>¿Qué tipo de inmueble posee?</ion-label>
+                                  <ion-select  okText="Aceptar" cancelText="Cerrar" required  id="inmueble"  name="inmueble" #inmueble="ngModel" [(ngModel)]="adopcion.inmueble">
+                                    <ion-select-option value="Casa propia">Casa propia</ion-select-option>
+                                    <ion-select-option value="Casa arrendada">Casa arrendada</ion-select-option>
+                                    <ion-select-option value="Departamento propio">Departamento propio</ion-select-option>
+                                    <ion-select-option value="Departamento arrendado">Departamento arrendado</ion-select-option>
+                                  </ion-select>
+                                </ion-item>
+                              
+                              </ion-list>
+                              <p class="formErrormsj" *ngIf="!inmueble.valid && inmueble.touched">Selecciona el tipo de inmueble</p>
+        
+                </form>           
+            <div class="btnI">
+              <button  mat-button matStepperNext>Siguiente</button>
+            </div>
+        </mat-step>
+        <mat-step state="pets">
+            <form id="formC" #loginForm2="ngForm"  class="formContent">
+
+                <ion-item [class.formError]="!deseoAdoptar.valid && deseoAdoptar.touched"> 
+                    <ion-label position="floating" class="ion-text-wrap">¿Porqué desea adoptar una mascota?</ion-label>
+                  <ion-textarea pattern="^[a-z A-Z áéíóúÁÉÍÓÚ 0-9 . ,]+$" maxlength="300" minlength="30" required  type="text" id="deseoAdoptar" name="deseoAdoptar" #deseoAdoptar="ngModel" [(ngModel)]="adopcion.deseoAdoptar"></ion-textarea>
+                </ion-item>
+                <p class="formErrormsj" *ngIf="!deseoAdoptar.valid && deseoAdoptar.touched">Responde mejor la pregunta</p>
+
+                <ion-item [class.formError]="!cambiarDomicilio.valid && cambiarDomicilio.touched">
+                    <ion-label position="floating" class="ion-text-wrap">Si cambia de domicilio. ¿Qué pasaría con la mascota?</ion-label>
+ 
+                  <ion-textarea pattern="^[a-z A-Z áéíóúÁÉÍÓÚ 0-9 . ,]+$" maxlength="300" minlength="10" required  type="text" id="cambiarDomicilio" name="cambiarDomicilio" #cambiarDomicilio="ngModel" [(ngModel)]="adopcion.cambiarDomicilio"></ion-textarea>
+                </ion-item>
+                <p class="formErrormsj" *ngIf="!cambiarDomicilio.valid && cambiarDomicilio.touched">Responde mejor la pregunta</p>
+                <ion-item [class.formError]="!cargoGastos.valid && cargoGastos.touched"> 
+                    <ion-label position="floating" class="ion-text-wrap">¿Quién se hará cargo de los gastos de la mascota?</ion-label>
+                  <ion-textarea pattern="^[a-z A-Z áéíóúÁÉÍÓÚ 0-9 . ,]+$" maxlength="300" minlength="10" required  type="text" id="cargoGastos" name="cargoGastos" #cargoGastos="ngModel" [(ngModel)]="adopcion.cargoGastos"></ion-textarea>
+                </ion-item>
+                <p class="formErrormsj" *ngIf="!cargoGastos.valid && cargoGastos.touched">Responde mejor la pregunta</p>
+                <ion-list>
+                    <ion-item [class.formError]="!dineroMensualMS.valid && dineroMensualMS.touched">
+                      <ion-label >Estime cuánto dinero mensual podría gastar en su mascota:</ion-label>
+                      <ion-select  okText="Aceptar" cancelText="Cerrar" required  id="dineroMensualMS"  name="dineroMensualMS" #dineroMensualMS="ngModel" [(ngModel)]="adopcion.dineroMensualMS">
+                        <ion-select-option value="5 a 20">5 a 20 dólares</ion-select-option>
+                        <ion-select-option value="21 a 50">21 a 50 dólares</ion-select-option>
+                        <ion-select-option value="Más de 50">Más de 50 dólares</ion-select-option>
+
+                      </ion-select>
+                    </ion-item>
+                  
+                  </ion-list>
+                  <p class="formErrormsj" *ngIf="!dineroMensualMS.valid && dineroMensualMS.touched">Selecciona una opción</p>
+
+               
+                    
+              </form>     
+            <div class="btnI2">
+              <button mat-button matStepperPrevious>Regresar</button>
+              <button mat-button matStepperNext>Siguiente</button>
+            </div>
+          
+        </mat-step>
+        <mat-step state="pets">
+            <form id="formC" #loginForm3="ngForm"  class="formContent">
+               
+                <ion-list>
+                    <ion-item [class.formError]="!cerramiento.valid && inmueble.touched">
+                      <ion-label>¿El lugar donde pasará la mascota posee cerramiento?</ion-label>
+                      <ion-select  okText="Aceptar" cancelText="Cerrar" required  id="cerramiento"  name="cerramiento" #cerramiento="ngModel" [(ngModel)]="adopcion.cerramiento">
+                        <ion-select-option value="Si">Si</ion-select-option>
+                        <ion-select-option value="No">No</ion-select-option>
+                       
+                      </ion-select>
+                    </ion-item>
+                  
+                  </ion-list>
+                  <p class="formErrormsj" *ngIf="!cerramiento.valid && cerramiento.touched">Selecciona una opción</p>
+                
+                   
+                <ion-list>
+                    <ion-item [class.formError]="!salirViaje.valid && salirViaje.touched">
+                      <ion-label >Si sale de viaje mas de un día la mascota:</ion-label>
+                      <ion-select  okText="Aceptar" cancelText="Cerrar" required  id="salirViaje"  name="salirViaje" #salirViaje="ngModel" [(ngModel)]="adopcion.salirViaje">
+                        <ion-select-option value="Viaja conmigo">Viaja conmigo</ion-select-option>
+                        <ion-select-option value="Se queda con un familiar">Se queda con un familiar</ion-select-option>
+                        <ion-select-option value="Hospedaje">Hospedaje</ion-select-option>
+                        <ion-select-option value="Otro">Otro</ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  
+                  </ion-list>
+                  <p class="formErrormsj" *ngIf="!salirViaje.valid && salirViaje.touched">Selecciona una opción</p>
+                  <ion-list>
+                      <ion-item [class.formError]="!tiempoSolo.valid && tiempoSolo.touched">
+                        <ion-label >Cuánto tiempo al día pasará sola la mascota?</ion-label>
+                        <ion-select  okText="Aceptar" cancelText="Cerrar" required  id="tiempoSolo"  name="tiempoSolo" #tiempoSolo="ngModel" [(ngModel)]="adopcion.tiempoSolo">
+                          <ion-select-option value="1">1 hora</ion-select-option>
+                          <ion-select-option value="2">2 horas</ion-select-option>
+                          <ion-select-option value="Más de 2">Más de 2 horas</ion-select-option>
+                        </ion-select>
+                      </ion-item>
+                    
+                    </ion-list>
+                    <p class="formErrormsj" *ngIf="!tiempoSolo.valid && tiempoSolo.touched">Selecciona una opción</p>
+                  
+                    <ion-item [class.formError]="!dormirMS.valid && dormirMS.touched"> 
+                        <ion-label position="floating" class="ion-text-wrap">¿Dónde dormirá la mascota?</ion-label>
+                      <ion-input pattern="^[a-z A-Z áéíóúÁÉÍÓÚ 0-9 . ,]+$" maxlength="300" minlength="5" required  type="text" id="dormirMS" name="dormirMS" #dormirMS="ngModel" [(ngModel)]="adopcion.dormirMS"></ion-input>
+                    </ion-item>
+                    <p class="formErrormsj" *ngIf="!dormirMS.valid && dormirMS.touched">Mejora tu respuesta</p>
+                    <ion-list>
+                        <ion-item [class.formError]="!comidaMS.valid && comidaMS.touched">
+                          <ion-label >¿Qué comerá habitualmente la mascota?</ion-label>
+                          <ion-select  okText="Aceptar" cancelText="Cerrar" required  id="comidaMS"  name="comidaMS" #comidaMS="ngModel" [(ngModel)]="adopcion.comidaMS">
+                            <ion-select-option value="Balanceado">Balanceado</ion-select-option>
+                            <ion-select-option value="Comida casera">Comida casera</ion-select-option>
+                            <ion-select-option value="Restos">Restos</ion-select-option>
+                          </ion-select>
+                        </ion-item>
+                      
+                      </ion-list>
+                      <p class="formErrormsj" *ngIf="!comidaMS.valid && comidaMS.touched">Selecciona una opción</p>
+                      <ion-list>
+                          <ion-item [class.formError]="!enfermaMS.valid && enfermaMS.touched">
+                            <ion-label >Si su mascota enferma usted:</ion-label>
+                            <ion-select  okText="Aceptar" cancelText="Cerrar" required  id="enfermaMS"  name="enfermaMS" #enfermaMS="ngModel" [(ngModel)]="adopcion.enfermaMS">
+                              <ion-select-option value="Lo lleva al veterinario">Lo lleva al veterinario</ion-select-option>
+                              <ion-select-option value="Lo medica usted mismo">Lo medica usted mismo</ion-select-option>
+                              <ion-select-option value="Lo lleva al centro de salud">Lo lleva al centro de salud</ion-select-option>
+                              <ion-select-option value="Espera a que sane solo">Espera a que sane solo</ion-select-option>
+    
+                            </ion-select>
+                          </ion-item>
+                        
+                        </ion-list>
+                        <p class="formErrormsj" *ngIf="!enfermaMS.valid && enfermaMS.touched">Selecciona una opción</p>
+    
+    
+              </form>  
+              <div class="btnI2">
+                  <button mat-button matStepperPrevious>Regresar</button>
+                  <button mat-button matStepperNext>Siguiente</button>
+                </div>
+        </mat-step>
+        <mat-step state="people">
+            <form id="formC" #loginForm4="ngForm"  class="formContent">
+                
+                  
+                <ion-list>
+                    <ion-item [class.formError]="!numMascotas.valid && numMascotas.touched">
+                      <ion-label>¿Posee otras mascotas?</ion-label>
+                      <ion-select  okText="Aceptar" cancelText="Cerrar" required  id="numMascotas"  name="numMascotas" #numMascotas="ngModel" [(ngModel)]="adopcion.numMascotas">
+                        <ion-select-option value="1">Sí, 1 mascota</ion-select-option>
+                        <ion-select-option value="2">Si, 2 mascotas </ion-select-option>
+                        <ion-select-option value="Más de 2">Si, más de 2 mascotas </ion-select-option>
+                        <ion-select-option value="No">No poseo mascotas</ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  
+                  </ion-list>
+                  <p class="formErrormsj" *ngIf="!numMascotas.valid && numMascotas.touched">Selecciona el número de mascotas</p>
+  
+                  <ion-list>
+                      <ion-item [class.formError]="!estadoMascotas.valid && estadoMascotas.touched">
+                        <ion-label>¿En qué estado de salud están la/las mascotas?</ion-label>
+                        <ion-select  okText="Aceptar" cancelText="Cerrar" required  id="estadoMascotas"  name="estadoMascotas" #estadoMascotas="ngModel" [(ngModel)]="adopcion.estadoMascotas">
+                          <ion-select-option value="Saludable/es">Saludable/es</ion-select-option>
+                          <ion-select-option value="Enferma/as">Enferma/as</ion-select-option>
+                          <ion-select-option value="Fallecido/dos">Fallecido/dos</ion-select-option>
+                          <ion-select-option value="Extraviada/das">Extraviada/das</ion-select-option>
+                        </ion-select>
+                      </ion-item>
+                    
+                    </ion-list>
+                    <p class="formErrormsj" *ngIf="!estadoMascotas.valid && estadoMascotas.touched">Selecciona el estado de salud de las mascotas</p>
+                    
+                    <ion-list>
+                        <ion-item [class.formError]="!numPersonas.valid && numPersonas.touched">
+                          <ion-label>Cuántas personas viven con usted?</ion-label>
+                          <ion-select  okText="Aceptar" cancelText="Cerrar" required  id="numPersonas"  name="numPersonas" #numPersonas="ngModel" [(ngModel)]="adopcion.numPersonas">
+                            <ion-select-option value="Solo">Vivo solo</ion-select-option>
+                            <ion-select-option value="1 a 3">Entre 1 a 3 </ion-select-option>
+                            <ion-select-option value="4 a 8">Entre 4 a 8</ion-select-option>
+                            <ion-select-option value="Más de 8">Más de 8</ion-select-option>
+
+                          </ion-select>
+                        </ion-item>
+                      
+                      </ion-list>
+                      <p class="formErrormsj" *ngIf="!numPersonas.valid && numPersonas.touched">Selecciona el número de personas</p>
+
+                      <ion-list>
+                          <ion-item [class.formError]="!familiarEmbarazo.valid && familiarEmbarazo.touched">
+                            <ion-label >¿Algún familiar espera un bebé?</ion-label>
+                            <ion-select  okText="Aceptar" cancelText="Cerrar" required  id="familiarEmbarazo"  name="familiarEmbarazo" #familiarEmbarazo="ngModel" [(ngModel)]="adopcion.familiarEmbarazo">
+                              <ion-select-option value="Si">Si</ion-select-option>
+                              <ion-select-option value="No">No</ion-select-option>  
+                            </ion-select>
+                          </ion-item>
+                        
+                        </ion-list>
+                        <p class="formErrormsj" *ngIf="!familiarEmbarazo.valid && familiarEmbarazo.touched">Selecciona una opción</p>
+      
+                        <ion-list>
+                            <ion-item [class.formError]="!familiarAlergico.valid && familiarAlergico.touched">
+                              <ion-label >¿Algún familiar es alérgico a los animales o subre de asma?</ion-label>
+                              <ion-select  okText="Aceptar" cancelText="Cerrar" required  id="familiarAlergico"  name="familiarAlergico" #familiarAlergico="ngModel" [(ngModel)]="adopcion.familiarAlergico">
+                                <ion-select-option value="Si">Si</ion-select-option>
+                                <ion-select-option value="No">No</ion-select-option>  
+                              </ion-select>
+                            </ion-item>
+                          
+                          </ion-list>
+                          <p class="formErrormsj" *ngIf="!familiarAlergico.valid && familiarAlergico.touched">Selecciona una opción</p>
+      
+                
+              </form>  
+              <div class="btnI2">
+                  <button mat-button matStepperPrevious>Regresar</button>
+                  <button mat-button matStepperNext>Siguiente</button>
+                </div>
+        </mat-step>
+        <mat-step state="contact_phone">
+            <form id="formC" #loginForm5="ngForm"  class="formContent">
+                
+                <ion-item [class.formError]="!compartidaFamilia.valid && compartidaFamilia.touched"> 
+                    <ion-label position="floating" class="ion-text-wrap">¿Qué opina su familia de la adopción que desea realizar?</ion-label>
+                  <ion-textarea pattern="^[a-z A-Z áéíóúÁÉÍÓÚ 0-9 . ,]+$" maxlength="300" minlength="10" required  type="text" id="compartidaFamilia" name="compartidaFamilia" #compartidaFamilia="ngModel" [(ngModel)]="adopcion.compartidaFamilia"></ion-textarea>
+                </ion-item>
+                <p class="formErrormsj" *ngIf="!compartidaFamilia.valid && compartidaFamilia.touched">Responde mejor la pregunta</p>
+
+                <ion-item [class.formError]="!nombresRP.valid && nombresRP.touched"> 
+                    <ion-label position="floating" class="ion-text-wrap">Nombres/Apellidos de una persona de referencia</ion-label>
+                  <ion-textarea pattern="^[a-z A-Z áéíóúÁÉÍÓÚ 0-9]+$" maxlength="100" minlength="10" required  type="text" id="nombresRP" name="nombresRP" #nombresRP="ngModel" [(ngModel)]="adopcion.nombresRP"></ion-textarea>
+                </ion-item>
+                <p class="formErrormsj" *ngIf="!nombresRP.valid && nombresRP.touched">Nombres/apellidos no válidos</p>
+
+                <ion-item [class.formError]="!telefonoRP.valid && telefonoRP.touched"> 
+                    <ion-label position="floating" class="ion-text-wrap">Teléfono de tu referencia</ion-label>
+                  <ion-input pattern="^[a-z A-Z áéíóúÁÉÍÓÚ 0-9]+$" maxlength="10" minlength="9" required  type="text" id="telefonoRP" name="telefonoRP" #telefonoRP="ngModel" [(ngModel)]="adopcion.telefonoRP"></ion-input>
+                </ion-item>
+                <p class="formErrormsj" *ngIf="!telefonoRP.valid && telefonoRP.touched">Teléfono no válido</p>
+                <ion-list>
+                    <ion-item [class.formError]="!visitarDomicilio.valid && visitarDomicilio.touched">
+                      <ion-label >¿Está de acuerdo en qué podamos visitar su domicilio para verificar el estado de la mascota?</ion-label>
+                      <ion-select  okText="Aceptar" cancelText="Cerrar" required  id="visitarDomicilio"  name="visitarDomicilio" #visitarDomicilio="ngModel" [(ngModel)]="adopcion.visitarDomicilio">
+                        <ion-select-option value="Si">Si</ion-select-option>
+                        <ion-select-option value="No">No</ion-select-option>  
+                      </ion-select>
+                    </ion-item>
+                  
+                  </ion-list>
+                  <p class="formErrormsj" *ngIf="!visitarDomicilio.valid && visitarDomicilio.touched">Selecciona una opción</p>
+
+                
+              </form>  
+              <div class="btnI2">
+                  <button mat-button matStepperPrevious>Regresar</button>
+                  <button mat-button (click)="registrarAdopcion(mascota.responsable._id,mascota._id)" [disabled]="!loginForm.form.valid && !loginForm2.form.valid && !loginForm3.form.valid && !loginForm4.form.valid && !loginForm5.form.valid">Finalizar</button>
+                </div>
+          
+        </mat-step>
+      </mat-horizontal-stepper>
+    
+</div>
+</ion-content>

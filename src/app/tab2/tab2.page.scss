@@ -1,0 +1,44 @@
+
+.cards{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  
+    ion-card{
+      width: 10rem;
+      height: 12rem;
+  
+      ion-card-header{
+        padding: 0;
+        width: 100%;
+        height: 80%;
+        img{
+          width: 100%;
+          height: 100%;
+        }
+      }
+      ion-card-content{
+        padding: 0;
+        width: 100%;
+        height: 20%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        ion-card-title{
+          width: 100%;
+          color: #3bbfad;
+          font-family: 'Righteous', cursive;
+          text-align: center;
+          padding: 0 2px;
+          overflow:hidden;
+      white-space:nowrap;
+      text-overflow: ellipsis;
+        }
+        
+      }
+    }
+  }

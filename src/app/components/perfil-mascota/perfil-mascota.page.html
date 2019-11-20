@@ -1,0 +1,193 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="mascota">{{mascota.nombre}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content  id="msc" [scrollEvents]="true"
+(ionScroll)="logScrolling($event)"
+(ionScrollEnd)="logScrollEnd()">
+
+      
+  <div *ngIf="!mascota" class="carga">
+    <div class="header-carga">
+        <ion-card>
+            <ion-card-content>
+                <ion-skeleton-text animated></ion-skeleton-text>
+      
+            </ion-card-content>
+          </ion-card>
+          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+
+    </div>
+    
+    <div class="ion-padding custom-skeleton">
+      <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+      <ion-skeleton-text animated></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+    </div>
+    <div class="ion-padding custom-skeleton">
+        <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+        <ion-skeleton-text animated></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+      </div>
+  
+      <ion-button style="width: 100%; --background: transparent; position: absolute; bottom: 0;left: 0;">
+          <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-button>
+
+   
+  </div>
+  <div class="mascota" *ngIf="mascota" >
+    <div class="header-perfil">
+      <div class="swiper-container">
+        <div class="swiper-wrapper" >
+          <div class="swiper-slide" *ngFor="let foto of mascota.fotos">
+            <img src="{{url + 'obtener-foto-mascota/' + foto.name}}">
+          </div>
+
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+      </div>
+      
+    </div>
+   
+     <div class="content-perfil">
+       <div class="mascota-name">
+          <h2>{{mascota.nombre}}</h2>
+          <span></span>
+       </div>
+
+       <ion-toolbar>
+          <ion-segment (ionChange)="segmentChanged($event)">
+            <ion-segment-button value="desc" id="desc" class="segment-button-checked">
+              <ion-icon name="heart"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="info">
+                <ion-icon name="information-circle"></ion-icon>
+              </ion-segment-button>
+            <ion-segment-button value="vacunas">
+              <ion-icon name="medkit"></ion-icon>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-toolbar>
+        
+
+       <div class="mascota-desc">
+         <div class="fund">
+           <p><i class="fa fa-university" aria-hidden="true"></i> {{mascota.responsable.nombreFundacion}}</p>
+         </div>
+         <p>{{mascota.descripcion}}</p>
+       </div>
+       <div class="mascota-options">
+          <ion-grid>
+              <ion-row  >
+                <ion-col size="6" class="itemOP">
+                    <ion-item>
+                        <i class="fa fa-heart" aria-hidden="true" slot="start"></i> 
+                        <ion-label>
+                            {{mascota.especie}}
+                        </ion-label>
+                      </ion-item>
+  
+                </ion-col>
+                <ion-col size="6" class="itemOP">
+                    <ion-item>
+                        <i class="fa fa-venus-mars" aria-hidden="true" slot="start"></i> 
+                        <ion-label>
+                            {{mascota.sexo}}
+                        </ion-label>
+                      </ion-item>
+                </ion-col>
+                <ion-col size="6" class="itemOP">
+                    <ion-item>
+                        <i class="fa fa-paw" aria-hidden="true" slot="start"></i> 
+                        <ion-label>
+                            {{mascota.raza}}
+                        </ion-label>
+                      </ion-item>
+
+                </ion-col >
+                <ion-col size="6" class="itemOP">
+                    <ion-item>
+                        <i class="fa fa-circle" aria-hidden="true" slot="start"></i> 
+                        <ion-label>
+                            {{mascota.color}}
+                        </ion-label>
+                      </ion-item> 
+                </ion-col>
+                <ion-col size="6" class="itemOP">
+                    <ion-item>
+                        <i class="fa fa-text-height" aria-hidden="true" slot="start"></i> 
+                        <ion-label>
+                            {{mascota.tamanio}}
+                        </ion-label>
+                      </ion-item> 
+                  </ion-col>
+                  <ion-col size="12" class="itemOP">
+                      <ion-item>
+                          <i class="fa fa-medkit" aria-hidden="true" slot="start"></i>
+                          <ion-label *ngIf="mascota.esterilizado == 'Si'">
+                              Esterilizado
+                          </ion-label>
+                          <ion-label *ngIf="mascota.esterilizado == 'No'">
+                              No esterilizado
+                          </ion-label>
+                        </ion-item> 
+                     </ion-col>
+                <ion-col size="12" class="itemOP">
+                    <ion-item>
+                        <i class="fa fa-birthday-cake" aria-hidden="true" slot="start"></i>
+                        <ion-label *ngIf="mascota.anios > 0 && mascota.meses > 0">
+                            {{mascota.edadT}} ({{mascota.anios}} años/ {{mascota.meses}} meses)
+                        </ion-label>
+                        <ion-label *ngIf="mascota.anios > 0 && mascota.meses == 0">
+                            {{mascota.edadT}} ({{mascota.anios}} años)
+                        </ion-label>
+                        <ion-label *ngIf="mascota.anios == 0 && mascota.meses > 0">
+                            {{mascota.edadT}}  ({{mascota.meses}} meses)
+                        </ion-label>
+                      </ion-item> 
+                </ion-col>
+               
+              
+              </ion-row>
+          </ion-grid>
+         
+        
+
+         
+
+
+
+       </div>
+       <div class="mascota-vacunas">
+         <div class="options">
+            <p *ngIf="mascota.vacunas.Antirrabica == 'Si'"><i class="fa fa-stethoscope" aria-hidden="true"></i> Antirrábica</p>
+            <p *ngIf="mascota.vacunas.Bronchicine == 'Si'"><i class="fa fa-stethoscope" aria-hidden="true"></i> Bronchicine</p>
+            <p *ngIf="mascota.vacunas.Puppy == 'Si'"><i class="fa fa-stethoscope" aria-hidden="true"></i> Puppy</p>
+            <p *ngIf="mascota.vacunas.Multiple == 'Si'"><i class="fa fa-stethoscope" aria-hidden="true"></i> Múltiple</p>
+            
+         </div>
+        
+
+
+       </div>
+   
+     </div>
+  </div>
+</ion-content>
+<ion-footer *ngIf="mascota && validAdop == true"  translucent="true">
+  <p  (click)="presentModal(mascota._id)">ADOPTAME</p>
+</ion-footer>
+<ion-footer *ngIf="mascota && validAdop == false" translucent="true" >
+   <p> Postulado {{(vadopcion.creadoEn | amFromUnix) | amLocale:'es' | amTimeAgo}}</p>
+  </ion-footer>
